@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { colorMap, STATUS } from "./lib/constant";
-import { getPermission } from "./lib/helper";
+import { getAccessPrompt, getPermission } from "./lib/helper";
 import type { PermissionType } from "./lib/interface";
 
 export default function App() {
@@ -57,7 +57,7 @@ export default function App() {
               </h2>
               <p className="mt-2 text-gray-600">{perm.status} {perm.status ? colorMap[perm.status]:null }</p>
             </div>
-            <button className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+            <button onClick={async()=>await getAccessPrompt(perm.name)} className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
               Test Permission
             </button>
           </div>
