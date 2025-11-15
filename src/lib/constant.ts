@@ -1,18 +1,20 @@
-export const STATUS = [
-  { name: "Geolocation", status: "🟢 Granted" },
-  { name: "Notifications", status: "🟡 Prompt" },
-  { name: "Camera", status: "🔴 Denied" },
-  { name: "Microphone", status: "⚪ Not Supported" },
-  { name: "Clipboard Read", status: "🟢 Granted" },
-  { name: "Clipboard Write", status: "🟡 Prompt" },
+import type { PermissionType } from "./interface";
+
+export const STATUS:PermissionType[] = [
+  { label: "Geolocation", name: "geolocation", status: null },
+  { label: "Notifications", name: "notifications", status: null },
+  { label: "Camera", name: "camera", status: null },
+  { label: "Microphone", name: "microphone", status: null },
+  { label: "Clipboard read", name: "clipboard-read", status: null },
+  { label: "Clipboard write", name: "clipboard-write", status: null },
 ];
 
-export const colorMap = {
-  granted: "green",
-  denied: "red",
-  prompt: "yellow",
-  "not supported": "gray",
-};
+ export const colorMap: Record<string, string> = {
+    granted: "🟢",
+    denied: "🔴",
+    prompt: "🟡",
+    "not-supported": "⚪",
+  };
 
 export const PERMISSIONS = [
   "geolocation",
