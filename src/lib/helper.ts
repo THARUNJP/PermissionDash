@@ -31,3 +31,19 @@ export const permissionsCase = (state: PermissionState) => {
       break;
   }
 };
+
+export const getMicrophoneAccess = async () => {
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.error("getUserMedia is not supported in this browser.");
+      return false;
+    }
+
+    await navigator.mediaDevices.getUserMedia({ audio: true });
+    return true;
+
+  } catch (err) {
+    console.error("Microphone permission denied:", err);
+    return false;
+  }
+};
