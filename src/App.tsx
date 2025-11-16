@@ -37,9 +37,12 @@ export default function App() {
         <p className="text-gray-600 mt-1">
           Monitor and test browser permissions in real-time.
         </p>
-        <button className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          Refresh Permissions
-        </button>
+       <button
+  onClick={() => window.location.reload()}
+  className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
+>
+  Refresh Permissions
+</button>
       </header>
 
       {/* Permissions Grid */}
@@ -57,7 +60,7 @@ export default function App() {
               </h2>
               <p className="mt-2 text-gray-600">{perm.status} {perm.status ? colorMap[perm.status]:null }</p>
             </div>
-            <button onClick={async()=>await getAccessPrompt(perm.name)} className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+            <button id="mic-test" onClick={async()=>await getAccessPrompt(perm.name)} className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
               Test Permission
             </button>
           </div>
