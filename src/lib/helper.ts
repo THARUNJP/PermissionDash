@@ -39,8 +39,8 @@ export const getMicrophoneAccess = async () => {
       return false;
     }
 
-    const stream  = await navigator.mediaDevices.getUserMedia({ audio: true });
-    stream.getTracks().forEach(e=>e.stop())
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach((e) => e.stop());
     return true;
   } catch (err) {
     console.error("Microphone permission denied:", err);
@@ -53,9 +53,9 @@ export const getCameraAccess = async () => {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       throw new Error("getUserMedia is not supported in this browser.");
     }
-   const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        stream.getTracks().forEach(e=>e.stop())
-
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    stream.getTracks().forEach((e) => e.stop());
+    return true;
   } catch (err) {
     console.error(err, "err in accessing the camera");
     return false;
@@ -104,13 +104,11 @@ export const getAccessPrompt = async (perm: string) => {
   }
 };
 
-export const getDefaultDevices = async()=>{
-  try{
-    const devices  = await navigator.mediaDevices.enumerateDevices()
+export const getDefaultDevices = async () => {
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
     return devices;
+  } catch (err) {
+    console.error("err in emurating devices", err);
   }
-  catch(err){
-    console.error("err in emurating devices",err);
-    
-  }
-}
+};

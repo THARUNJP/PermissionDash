@@ -4,8 +4,7 @@ import { getAccessPrompt, getPermission } from "./lib/helper";
 import type { PermissionType } from "./lib/interface";
 
 export default function App() {
-
-  const [permissions,setPermissions] = useState<PermissionType[]>(STATUS);
+  const [permissions, setPermissions] = useState<PermissionType[]>(STATUS);
 
   useEffect(() => {
     getIntialPermission();
@@ -20,12 +19,28 @@ export default function App() {
         })
       );
 
-      setPermissions(intialData)
+      setPermissions(intialData);
       console.log(intialData);
     } catch (err) {
       console.log(err, "?");
     }
   }
+
+async function handlePermissionChange(name: string) {
+  try {
+    const isAllowed = await getAccessPrompt(name);
+    const status: PermissionState = isAllowed ? "granted" : "denied";
+
+    setPermissions(prev =>
+      prev.map(p =>
+        p.name === name ? { ...p, status } : p
+      )
+    );
+  } catch (err) {
+    console.error("Permission update failed:", err);
+  }
+}
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
@@ -37,12 +52,12 @@ export default function App() {
         <p className="text-gray-600 mt-1">
           Monitor and test browser permissions in real-time.
         </p>
-       <button
-  onClick={() => window.location.reload()}
-  className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
->
-  Refresh Permissions
-</button>
+        <button
+          onClick={() => window.location.reload()}
+          className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
+        >
+          Refresh Permissions
+        </button>
       </header>
 
       {/* Permissions Grid */}
@@ -58,9 +73,15 @@ export default function App() {
               <h2 className="text-xl font-semibold text-gray-800">
                 {perm.label}
               </h2>
-              <p className="mt-2 text-gray-600">{perm.status} {perm.status ? colorMap[perm.status]:null }</p>
+              <p className="mt-2 text-gray-600">
+                {perm.status} {perm.status ? colorMap[perm.status] : null}
+              </p>
             </div>
-            <button id="mic-test" onClick={async()=>await getAccessPrompt(perm.name)} className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+            <button
+              id="mic-test"
+              onClick={async () => await handlePermissionChange(perm.name)}
+              className="mt-4 w-full py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+            >
               Test Permission
             </button>
           </div>
